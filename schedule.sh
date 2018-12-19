@@ -8,7 +8,7 @@ predict=/home/franchini/Satellite/predict-2.2.5/predict
 
 ####################
 
-rm passages.*
+rm -r passages.*
 
 # Update Satellite Information
 echo "Update Satellite Information..."
@@ -75,13 +75,16 @@ if [ -f passages.tmp ]; then
 	sat=`echo $line | awk '{print $7 " " $8}'`
 	start=`echo $line | awk '{print $1}'`
 	stop=`echo $line | awk '{print $4}'`
-    
-	source submit_job.sh $sat $start $stop
+	elevation=`echo $line | awk '{print $9}'`
+	source submit_job.sh $sat $start $stop $elevation
 	
     done < passages.txt
 
+    less recordings.log | sort | uniq > recordings.tmp
+    mv recordings.tmp recordings.log
+    
 else
-    echo "No passages for today"
+    echo -e "\nNo passages for today"
 fi
 
 
