@@ -3,11 +3,13 @@
 ####################
 
 min_el=20
-where=ravenna.qth #frilsham.qth
-predict=/home/franchini/Satellite/predict-2.2.5/predict
+dir=/home/franchini/Satellite
+where=$dir/code/ravenna.qth #frilsham.qth
+predict=$dir/predict/predict
 
 ####################
 
+cd $dir
 rm -r passages.*
 
 # Update Satellite Information
@@ -36,7 +38,7 @@ for sat in "NOAA 15" "NOAA 18" "NOAA 19" "METEOR-M 2"; do
 	
 	max_el=0
 	max_el=`$predict -q $where -t weather.tle -p "${sat}" "$time" | awk '{if($5>max){max=$5}}END{print max}'`
-	if [ -n "$max_el" ] && [ "$max_el" -gt "$min_el" ]; then
+	if [[ -n "$max_el" ]] && [[ "$max_el" -gt "$min_el" ]]; then
 	    
 	    # Found a passage:
 	    #	    echo -e "\n" $sat "at max elevation:" $max_el "deg"
@@ -66,7 +68,6 @@ if [ -f passages.tmp ]; then
     rm passages.tmp
 
     # Submit jobs
-    
     while read line; do
 	
 	echo "$line"
