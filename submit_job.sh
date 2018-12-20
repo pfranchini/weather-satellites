@@ -54,9 +54,9 @@ fi
 
 if [ "$specie" == "METEOR-M" ]; then
     # Record:
-    echo "timeout $rectime rtl_sdr -f ${frequency}M -s 140k -g 28 -E dc -d 0 -p 1 -b 8 ${filename}.bin" # > job.txt 
-    #| at $at_start" -f job.txt  
-    #rm job.txt
+    echo "timeout $rectime rtl_sdr -f ${frequency}M -s 140k -g 28 -E dc -d 0 -p 1 -b 8 audio/${filename}.bin"  > job.txt 
+    at $at_start -f job.txt  
+    rm job.txt
     
     # Demodulate:
     #/home/franchini/Satellite/METEOR/meteor_demod/meteor_demod -q -s 140000 -o ${filename}.wav ${filename}.bin
