@@ -9,7 +9,7 @@ predict=$dir/predict/predict
 
 ####################
 
-cd $dir
+cd $dir/code
 rm -r passages.*
 
 # Update Satellite Information
