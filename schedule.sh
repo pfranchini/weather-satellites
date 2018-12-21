@@ -67,6 +67,9 @@ if [ -f passages.tmp ]; then
     sort passages.tmp | uniq > passages.txt
     rm passages.tmp
 
+    # Remove old at jobs
+    for i in `atq | awk '{print $1}'`; do atrm $i; done
+    
     # Submit jobs
     while read line; do
 	

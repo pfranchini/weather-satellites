@@ -42,5 +42,9 @@ Usage:
 cd ~/Satellite/code
 ./schedule.sh
 
+or as a cronjob, i.e.:
+
+01 00 * * * /home/franchini/Satellite/code/schedule.sh
+
 Log in: recordings.log
 Output in: ~/Satellite/code/audio/

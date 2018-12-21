@@ -54,7 +54,7 @@ fi
 
 if [ "$specie" == "METEOR-M" ]; then
     # Record:
-    echo "timeout $rectime rtl_sdr -f ${frequency}M -s 140k -g 28 -E dc -d 0 -p 1 -b 8 audio/${filename}.bin"  > job.txt 
+    echo "timeout $rectime rtl_sdr -f ${frequency}M -s 140k -g 28 -d 0 -p 1 -b 8 audio/${filename}.bin"  > job.txt 
     at $at_start -f job.txt  
     rm job.txt
     
