@@ -13,17 +13,17 @@ at_start=`date --date=@${start} +%H:%M`
 if [ "$sat" == "NOAA15" ]; then
    #frequency=137.620
     frequency=137.614
-    sampling=60
+    sampling=40
 fi
 if [ "$sat"  == "NOAA18" ]; then
    #frequency=137.9125
     frequency=137.906
-    sampling=60
+    sampling=40
 fi
 if [ "$sat" == "NOAA19" ]; then
    #frequency=137.100
     frequency=137.092
-    sampling=60
+    sampling=40
 fi
 if [ "$sat" == "METEOR-M2" ]; then
     frequency=137.900 
@@ -54,7 +54,16 @@ fi
 
 if [ "$specie" == "METEOR-M" ]; then
     # Record:
-    echo "timeout $rectime rtl_sdr -f ${frequency}M -s 140k -g 28 -d 0 -p 1 -b 8 audio/${filename}.bin"  > job.txt 
+    #echo "timeout $rectime rtl_sdr -f ${frequency}M -s 140k -g 28 -d 0 -p 1 -b 8 audio/${filename}.bin"  > job.txt    ## tried 
+    # rtl_fm -M raw -s 140000 -f 137.9M -E dc -g <gain> -p <ppm> 
+    # rtl_fm -f 137.9M -s 140k -M raw -g <gain> -p <ppm> <output .wav file    
+
+    echo "timeout $rectime rtl_fm  -f ${frequency}M -g 50 -s 200k - > audio/${filename}.raw" > job.txt
+
+    # Resample and Decode:
+    echo "sox -r 192000 -e signed -b 16 -c 2 audio/${filename}.raw audio/${filename}.wav" >> job.txt
+    echo "sox audio/${filename}.wav audio/${filename}_res.wav rate 140000" >> job.txt
+
     at $at_start -f job.txt  
     rm job.txt
     
@@ -65,8 +74,7 @@ if [ "$specie" == "METEOR-M" ]; then
     #/home/franchini/Satellite/METEOR/meteor_decoder/medet ${filename}.wav ${filename}.png
 
 
-    # rtl_fm -M raw -s 140000 -f 137.9M -E dc -g <gain> -p <ppm> 
-    # rtl_fm -f 137.9M -s 140k -M raw -g <gain> -p <ppm> <output .wav file    
+
 fi
 
 
