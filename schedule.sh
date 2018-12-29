@@ -39,16 +39,18 @@ for sat in "NOAA 15" "NOAA 18" "NOAA 19" "METEOR-M 2"; do
 	max_el=0
 	max_el=`$predict -q $where -t weather.tle -p "${sat}" "$time" | awk '{if($5>max){max=$5}}END{print max}'`
 	if [[ -n "$max_el" ]] && [[ "$max_el" -gt "$min_el" ]]; then
-	    
-	    # Found a passage:
-	    #	    echo -e "\n" $sat "at max elevation:" $max_el "deg"
-	    #	    echo "                Date     Time      El   Az  Phase  LatN   LonW    Range  Orbit"
-	    #	    $predict -q $where -t weather.tle -p "${sat}" "$time" | head -1
-	    #	    $predict -q $where -t weather.tle -p "${sat}" "$time" | tail -1
 
-	    a=`$predict -q $where -t weather.tle -p "${sat}" "$time" | head -1 | awk '{print $1 " " $3 " " $4}'`
-	    b=`$predict -q $where -t weather.tle -p "${sat}" "$time" | tail -1 | awk '{print $1 " " $3 " " $4}'`
-	    echo -e $a " " $b " " $sat "\t" $max_el >> passages.tmp
+	    # Acquisition of Signal - Lost of Signal
+	    AOS=`$predict -q $where -t weather.tle -p "${sat}" "$time" | head -1 | awk '{print $1 " " $3 " " $4}'`
+	    LOS=`$predict -q $where -t weather.tle -p "${sat}" "$time" | tail -1 | awk '{print $1 " " $3 " " $4}'`
+
+	    # Day of the passage
+	    day=`$predict -q $where -t weather.tle -p "${sat}" "$time" | head -1 | awk '{print $1}'`
+
+	    # saves only the passages in the current day
+	    if [ `date --date=@${day} +%Y%m%d` -eq "$today" ]; then
+		echo -e $AOS " " $LOS " " $sat "\t" $max_el >> passages.tmp
+	    fi
 	    
 	fi
 	
@@ -67,7 +69,7 @@ if [ -f passages.tmp ]; then
     sort passages.tmp | uniq > passages.txt
     rm passages.tmp
 
-    # Remove old at jobs
+    # Remove old 'at' jobs
     for i in `atq | awk '{print $1}'`; do atrm $i; done
     
     # Submit jobs
@@ -80,8 +82,9 @@ if [ -f passages.tmp ]; then
 	start=`echo $line | awk '{print $1}'`
 	stop=`echo $line | awk '{print $4}'`
 	elevation=`echo $line | awk '{print $9}'`
-	source submit_job.sh $sat $start $stop $elevation
-	
+
+	source submit_job.sh $sat $start $stop $elevation &>> jobs.log
+
     done < passages.txt
 
     less recordings.log | sort | uniq > recordings.tmp

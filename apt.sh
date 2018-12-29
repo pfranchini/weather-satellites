@@ -29,16 +29,16 @@ direction=`less wxtoimg.log  | grep Direction | awk '{print $2}'`
 cat ZA.log
 error=`cat ZA.log | grep -i "warning"`
 if  [ ! -z "$error" ]; then
-    rm -rf $file-ZA.png
-    #echo $file $error >> errors.log
+    mv $file-ZA.png audio/deleted/
+    echo $file $error >> errors.log
 fi
 
 /home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -e HVC -c -y low -o ${file}_res.wav $file-HVC.png &> HVC.log
 cat HVC.log
 error=`cat HVC.log | grep -i "warning"`
 if  [ ! -z "$error" ]; then
-    rm -rf $file-HVC.png
-    #echo $file $error >> errors.log                                                                                                                                        
+    mv $file-HVC.png audio/deleted/
+    echo $file $error >> errors.log                                                                                                                                        
 fi
 
 rm -rf ${file}-map.png
@@ -52,6 +52,8 @@ rm -rf ${file}-map.png
 #convert -rotate 180 ${file}-map.png ${file}-map.png
 
 rm wxtoimg.log
+rm HVC.log
+rm ZA.log
 
 #rm ${file}-map.png
 #convert -rotate 180 $file.png $file.png

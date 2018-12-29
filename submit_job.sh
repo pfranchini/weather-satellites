@@ -58,12 +58,15 @@ if [ "$specie" == "METEOR-M" ]; then
     # rtl_fm -M raw -s 140000 -f 137.9M -E dc -g <gain> -p <ppm> 
     # rtl_fm -f 137.9M -s 140k -M raw -g <gain> -p <ppm> <output .wav file    
 
-    echo "timeout $rectime rtl_fm  -f ${frequency}M -g 50 -s 200k - > audio/${filename}.raw" > job.txt
+##    echo "timeout $rectime rtl_fm  -f ${frequency}M -g 50 -s 200k - > audio/${filename}.raw" > job.txt
+##
+##    # Resample and Decode:
+##    echo "sox -r 192000 -e signed -b 16 -c 2 audio/${filename}.raw audio/${filename}.wav" >> job.txt
+##    echo "sox audio/${filename}.wav audio/${filename}_res.wav rate 140000" >> job.txt
 
-    # Resample and Decode:
-    echo "sox -r 192000 -e signed -b 16 -c 2 audio/${filename}.raw audio/${filename}.wav" >> job.txt
-    echo "sox audio/${filename}.wav audio/${filename}_res.wav rate 140000" >> job.txt
-
+    echo "export DISPLAY=:0" > job.txt
+    echo "timeout $rectime /usr/bin/python /home/franchini/Satellite/METEOR/meteor-m2-lrpt/top_block.py" >> job.txt
+    
     at $at_start -f job.txt  
     rm job.txt
     
