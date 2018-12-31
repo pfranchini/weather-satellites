@@ -83,7 +83,7 @@ if [ -f passages.tmp ]; then
 	stop=`echo $line | awk '{print $4}'`
 	elevation=`echo $line | awk '{print $9}'`
 
-	source submit_job.sh $sat $start $stop $elevation &>> jobs.log
+	source submit_job.sh $sat $start $stop $elevation
 
     done < passages.txt
 

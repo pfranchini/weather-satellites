@@ -16,44 +16,58 @@ start=`date -d "${start}" +%s`
 
 tle=/home/franchini/Satellite/code/weather.tle
 
+# resampling
 rm -rf $file.png
 rm -rf $file_res.wav
 sox $file.wav -r 11025 ${file}_res.wav
+touch -d @`stat -c %Y $file.wav` ${file}_res.wav
 
+#/home/franchini/Satellite/wxtoimg/usr/local/bin/wxmap -L 44.422/12.224/0.0 -l 1 -c L:blue -c C:blue -c S:blue -c g:dark-cyan -a -T "$satellite" -H $tle -p 0 -l 0 -o $start ${file}-map.png &> wxtoimg.log  
 /home/franchini/Satellite/wxtoimg/usr/local/bin/wxmap -a -T "$satellite" -H $tle -p 0 -l 0 -o $start ${file}-map.png &> wxtoimg.log
 cat wxtoimg.log
 
-direction=`less wxtoimg.log  | grep Direction | awk '{print $2}'`
+#direction=`less wxtoimg.log  | grep Direction | awk '{print $2}'`
 
-/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -e ZA  -c -o ${file}_res.wav $file-ZA.png &> ZA.log
-cat ZA.log
-error=`cat ZA.log | grep -i "warning"`
+# IR:
+/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -b -e histeq -c -o ${file}_res.wav $file-IR.png &> IR.log
+cat IR.log
+error=`cat IR.log | grep -i "warning"`
 if  [ ! -z "$error" ]; then
-    mv $file-ZA.png audio/deleted/
+    mv $file-IR.png audio/deleted/
     echo $file $error >> errors.log
 fi
 
+# VIS:
 /home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -e HVC -c -y low -o ${file}_res.wav $file-HVC.png &> HVC.log
 cat HVC.log
 error=`cat HVC.log | grep -i "warning"`
 if  [ ! -z "$error" ]; then
     mv $file-HVC.png audio/deleted/
-    echo $file $error >> errors.log                                                                                                                                        
+    echo $file $error >> errors.log
 fi
 
+/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -e HVCT -c -y low -o ${file}_res.wav $file-HVCT.png &> HVCT.log
+cat HVCT.log
+error=`cat HVCT.log | grep -i "warning"`
+if  [ ! -z "$error" ]; then
+    mv $file-HVCT.png audio/deleted/
+    echo $file $error >> errors.log
+fi
+    
 rm -rf ${file}-map.png
 
 #if [[ "$direction" == "southbound" ]]; then
 #   echo "Rotate: "
-#   convert -rotate 180 $file-ZA.png $file-ZA.png
+#   convert -rotate 180 $file-IR.png $file-IR.png
 #   convert -rotate 180 $file-HVC.png $file-HVC.png
 #fi
 
 #convert -rotate 180 ${file}-map.png ${file}-map.png
 
 rm wxtoimg.log
+rm IR.log
 rm HVC.log
-rm ZA.log
+rm HVCT.log
 
 #rm ${file}-map.png
 #convert -rotate 180 $file.png $file.png
