@@ -16,6 +16,8 @@ start=`date -d "${start}" +%s`
 
 tle=/home/franchini/Satellite/code/weather.tle
 
+mkdir -p /home/franchini/Satellite/code/audio/deleted
+
 # resampling
 rm -rf $file.png
 rm -rf $file_res.wav
