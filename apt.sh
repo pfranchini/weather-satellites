@@ -16,6 +16,8 @@ start=`date -d "${start}" +%s`
 
 tle=/home/franchini/Satellite/code/weather.tle
 
+mkdir -p /home/franchini/Satellite/code/audio/deleted
+
 # resampling
 rm -rf $file.png
 rm -rf $file_res.wav
@@ -29,7 +31,7 @@ cat wxtoimg.log
 #direction=`less wxtoimg.log  | grep Direction | awk '{print $2}'`
 
 # IR:
-/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -b -e histeq -c -o ${file}_res.wav $file-IR.png &> IR.log
+/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 IR" -b -e histeq -c -o ${file}_res.wav $file-IR.png &> IR.log
 cat IR.log
 error=`cat IR.log | grep -i "warning"`
 if  [ ! -z "$error" ]; then
@@ -38,7 +40,7 @@ if  [ ! -z "$error" ]; then
 fi
 
 # VIS:
-/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -e HVC -c -y low -o ${file}_res.wav $file-HVC.png &> HVC.log
+/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 HVC" -e HVC -c -y low -o ${file}_res.wav $file-HVC.png &> HVC.log
 cat HVC.log
 error=`cat HVC.log | grep -i "warning"`
 if  [ ! -z "$error" ]; then
@@ -46,8 +48,8 @@ if  [ ! -z "$error" ]; then
     echo $file $error >> errors.log
 fi
 
-/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -e HVCT -c -y low -o ${file}_res.wav $file-HVCT.png &> HVCT.log
-cat HVCT.log
+/home/franchini/Satellite/wxtoimg/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 HVCT" -e HVCT -c -y low -o ${file}_res.wav $file-HVCT.png &> HVCT.log
+cat HVCT.log 
 error=`cat HVCT.log | grep -i "warning"`
 if  [ ! -z "$error" ]; then
     mv $file-HVCT.png audio/deleted/
