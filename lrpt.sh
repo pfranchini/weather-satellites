@@ -1,24 +1,25 @@
+# To be finished and tested
 
-file=audio/$1
+file=$1
+option=$2
 
 if [ `wc -c <${file}.wav` -le 1000000 ]; then
     echo "Audio file ${file}.wav too small, probably wrong recording"
     exit
 fi
 
-rm -rf $file_res.wav
+#rm
 
-# Resample and Decode:                                                                                                                                                  
-echo "sox -r 192000 -e signed -b 16 -c 2 audio/${filename}.raw audio/${filename}.wav" >> job.txt
-echo "sox audio/${filename}.wav audio/${filename}_res.wav rate 140000" >> job.txt
-
-at $at_start -f job.txt
-rm job.txt
+# Normalise:
+#sox $file.wav ${file}_norm.wav gain -n
 
 # Demodulate:                                                                                                                                                           
-#/home/franchini/Satellite/METEOR/meteor_demod/meteor_demod -q -s 140000 -o ${filename}.wav ${filename}.bin                                                             
+#yes | /home/franchini/Satellite/METEOR/meteor_demod/meteor_demod -o ${file}.qpsk ${file}_norm.wav    
 
-# Decode:                                                                                                                                                               
-#/home/franchini/Satellite/METEOR/meteor_decoder/medet ${filename}.wav ${filename}.png    
+# Decode:
+#/home/franchini/Satellite/METEOR/meteor_decoder/medet ${file}.qpsk ${file} -cd
 
-#eog $file.png
+# Create image:
+#/home/franchini/Satellite/METEOR/meteor_decoder/medet ${file}.dec ${file} -r 65 -g 65 -b 64 -d
+/home/franchini/Satellite/METEOR/meteor_decoder/medet ${file}.dec ${file}_all -S -r 65 -g 65 -b 64 -d
+

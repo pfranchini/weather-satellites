@@ -22,7 +22,7 @@ mkdir -p /home/franchini/Satellite/code/audio/deleted
 rm -rf $file.png
 rm -rf $file_res.wav
 sox $file.wav -r 11025 ${file}_res.wav
-touch -d @`stat -c %Y $file.wav` ${file}_res.wav
+touch -r $file.wav ${file}_res.wav
 
 #/home/franchini/Satellite/wxtoimg/usr/local/bin/wxmap -L 44.422/12.224/0.0 -l 1 -c L:blue -c C:blue -c S:blue -c g:dark-cyan -a -T "$satellite" -H $tle -p 0 -l 0 -o $start ${file}-map.png &> wxtoimg.log  
 /home/franchini/Satellite/wxtoimg/usr/local/bin/wxmap -c g:dark-cyan -a -T "$satellite" -H $tle -p 0 -l 0 -o $start ${file}-map.png &> wxtoimg.log
