@@ -38,7 +38,7 @@ echo `date --date=@${start} +%Y%m%d-%H%M%S` $sat $elevation>> recordings.log
 # Submit satellite:
 if [ "$specie" == "NOAA" ]; then
     # Record: (-p 0.0, 55.0 ppm ????, added -E dc -A fast)
-    echo "timeout $rectime rtl_fm  -f ${frequency}M -s ${sampling}k -g 45 -p 0.0 -E wav -E dc -E deemp -F 9 -A fast - | sox -t raw -e signed -c 1 -b 16 -r ${sampling}k - audio/${filename}.wav &>> jobs.log"  > job.txt 
+    echo "timeout $rectime rtl_fm  -f ${frequency}M -s ${sampling}k -g 45 -p 0.0 -E wav -E dc -E deemp -F 9 - | sox -t raw -e signed -c 1 -b 16 -r ${sampling}k - audio/${filename}.wav &>> jobs.log"  > job.txt 
     #echo "timeout $rectime rtl_fm  -f ${frequency}M -s 60k  -g 45 -E wav - | sox -t raw -e signed -c 1 -b 16 -r 60k - ${filename}.wav" # > job.txt
     #echo "timeout $rectime rtl_fm  -f ${frequency}M -s 60k  -g 45 -p 55 -E wav -E deemp -F 9 - | sox -t raw - ${filename}.wav rate 11025" # > job.txt
 
@@ -65,7 +65,7 @@ if [ "$specie" == "METEOR-M" ]; then
     echo "timeout $rectime rtl_fm -M raw -f ${frequency}M -s ${sampling}k -g 48 -p 0.0 | sox -t raw -r ${sampling}k -c 2 -b 16 -e s - -t wav /home/franchini/Satellite/METEOR/${filename}.wav rate 96k" > job.txt
     
     # Resample and Decode:
-    #echo "/bin/bash lrpt.sh ${filename} & &>> jobs.log" >> job.txt
+    echo "/bin/bash lrpt.sh /home/franchini/Satellite/METEOR/${filename} &>> jobs.log" >> job.txt
 
     
     ##    echo "sox -r 192000 -e signed -b 16 -c 2 audio/${filename}.raw audio/${filename}.wav" >> job.txt
