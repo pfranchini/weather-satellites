@@ -14,7 +14,7 @@ fi
 sox $file.wav ${file}_norm.wav gain -n
 
 # Demodulate:                                                                                                                                                           
-yes | /home/franchini/Satellite/METEOR/meteor_demod/meteor_demod -B -o ${file}.qpsk ${file}_norm.wav    
+yes | /home/franchini/Satellite/METEOR/meteor_demod/meteor_demod -B -o ${file}.qpsk ${file}.wav    
 
 # Decode:
 /home/franchini/Satellite/METEOR/meteor_decoder/medet ${file}.qpsk ${file} -cd -q
