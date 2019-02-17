@@ -2,14 +2,15 @@
 
 ####################
 
-min_el=20
-dir=/home/franchini/Satellite
-where=$dir/code/ravenna.qth #frilsham.qth
-predict=$dir/predict/predict
+source config.cfg
+#min_el=20
+#dir=/home/franchini/Satellite/code
+#where=$dir/acton.qth    #frilsham.qth #ravenna.qth
+#predict=/home/franchini/Satellite/predict/predict
 
 ####################
 
-cd $dir/code
+cd $dir
 rm -r passages.*
 
 # Update Satellite Information
@@ -69,10 +70,13 @@ if [ -f passages.tmp ]; then
     sort passages.tmp | uniq > passages.txt
     rm passages.tmp
 
+    # Kill any 'rtl_fm' that might be still running (any midnight passage??)
+    pkill rtl_fm
+    
     # Remove old 'at' jobs
     for i in `atq | awk '{print $1}'`; do atrm $i; done
     
-    # Submit jobs
+    # Submit new jobs
     while read line; do
 	
 	echo "$line"

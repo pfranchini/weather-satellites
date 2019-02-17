@@ -1,11 +1,18 @@
+##################
+#
+# Usage: ./apt_reprocess.sh <directory_path_where_nooa_audios_are>
+#
+##################
 
-cd audio
-for filename in `ls *.wav | sed -e 's/\..*$//' | grep -v res`; do
+dir=`pwd`
+rm -rf $dir/job
 
-    echo "./apt.sh $filename" >> ../job
+for filename in `ls $1/*.wav | sed -e 's/\..*$//' | grep -v res`; do
+
+    echo "./apt.sh $filename" >> $dir/job
 
 done
 
-cd ..
+cd $dir
 bash job
 rm job
