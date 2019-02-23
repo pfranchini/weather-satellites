@@ -11,7 +11,23 @@ source config.cfg
 ####################
 
 cd $dir
-rm -r passages.*
+if [ ! -f $where ]; then
+    echo "Location file does not exist. Check config.cfg"
+fi
+if [ ! -f $demod ]; then
+    echo "Meteor demodulator wrong location. Check config.cfg"
+fi
+if [ ! -f $decoder ]; then
+    echo "Meteor decoder wrong location. Check config.cfg"
+fi
+if [ ! -f $wxdir ]; then
+    echo "WxToImg wrong location. Check config.cfg"
+fi
+if [ ! -f $dir ]; then
+    echo "Wrong code directory. Check config.cfg"
+fi
+
+rm -fr passages.*
 
 # Update Satellite Information
 echo "Update Satellite Information..."

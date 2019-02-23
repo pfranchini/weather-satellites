@@ -35,9 +35,10 @@ Predict:
 -------
 ```
 git clone https://github.com/kd2bd/predict/ ~/Satellite/predict
-cd Satellite/predict
-su ./configure
-echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/ravenna.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc
+cd ~/Satellite/predict
+su
+./configure
+echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/acton.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc
 ```
 
 Scripts:
@@ -51,13 +52,27 @@ APT decoder:
 ```
 cd ~/Satellite
 wget https://wxtoimgrestored.xyz/downloads/wxtoimg-linux64-2.10.11-1.tar.gz
-tar xvf wxtoimg-linux64-2.10.11-1.tar.gz -C wxtoimg/
-ln -s usr/local/bin/wxtoimg wxtoimg/wxtoimg
+mkdir ~/Satellite/wxtoimg
+tar xvf wxtoimg-linux64-2.10.11-1.tar.gz -C ~/Satellite/wxtoimg/
+ln -s usr/local/bin/wxtoimg ~/Satellite/wxtoimg/wxtoimg
 ```
--->register from https://wxtoimgrestored.xyz
+Register WXtoImg as in https://wxtoimgrestored.xyz
 
-LRPT:
-----
+LRPT demodulator:
+----------------
+```
+git clone https://github.com/dbdexter-dev/meteor_demod ~/Satellite/meteor_demod
+cd ~/Satellite/meteor_demod
+make
+su
+make install
+```
+
+LRPT decoder:
+------------
+git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
+yum install fpc
+./build_medet
 
 Usage:
 =====
@@ -74,8 +89,9 @@ or as a cronjob to be run every day early morning, i.e.:
 01 00 * * * ~/Satellite/code/schedule.sh
 ```
 
-Logs in: recordings.log, errors.log, jobs.log
-Output as speficied in config.cfg
+Logs in: recordings.log, errors.log, jobs.log.
+
+Output as speficied in config.cfg.
 
 
 
