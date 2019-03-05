@@ -3,14 +3,12 @@
 ####################
 
 source config.cfg
-#min_el=20
-#dir=/home/franchini/Satellite/code
-#where=$dir/acton.qth    #frilsham.qth #ravenna.qth
-#predict=/home/franchini/Satellite/predict/predict
 
 ####################
 
 cd $dir
+
+# Check the config.cfg file
 if [ ! -f $where ]; then
     echo "Location file does not exist. Check config.cfg"
 fi
@@ -20,10 +18,10 @@ fi
 if [ ! -f $decoder ]; then
     echo "Meteor decoder wrong location. Check config.cfg"
 fi
-if [ ! -f $wxdir ]; then
+if [ ! -d $wxdir ]; then
     echo "WxToImg wrong location. Check config.cfg"
 fi
-if [ ! -f $dir ]; then
+if [ ! -d $dir ]; then
     echo "Wrong code directory. Check config.cfg"
 fi
 

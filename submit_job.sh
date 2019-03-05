@@ -57,7 +57,7 @@ if [ "$specie" == "NOAA" ]; then
     echo "/bin/bash apt.sh ${output}/noaa/${filename} &>> jobs.log" >> job.txt
 
     # Submission:
-    at $at_start -f job.txt
+    at $at_start -f job.txt &> /dev/null
     rm job.txt
 
 
@@ -85,7 +85,7 @@ if [ "$specie" == "METEOR-M" ]; then
     #echo "timeout $rectime python /home/franchini/Satellite/METEOR/meteor-m2-lrpt-hack/meteor-m2-lrpt.py --destfile /home/franchini/Satellite/METEOR/${filename}" >> job.txt
     ###    echo "timeout $rectime /usr/bin/python /home/franchini/Satellite/METEOR/MexiMeteor2/top_block.py" >> job.txt
     
-    at $at_start -f job.txt  
+    at $at_start -f job.txt &> /dev/null
     rm job.txt
     
 fi

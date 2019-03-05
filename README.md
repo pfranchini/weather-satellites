@@ -21,14 +21,17 @@ Setup:
 Various prerequisites:
 ---------------------
 ```
-yum install gcc
-yum install ncurses-devel
-yum install rtl-sdr
-yum install sox
+yum install gcc ncurses-devel rtl-sdr sox at git
 (yum install ImageMagick)
-yum install at
+(yum install gqrx)
 
 mkdir ~/Satellite
+```
+
+Scripts:
+-------
+```
+git clone https://github.com/pfranchini/weather-satellites.git ~/Satellite/code
 ```
 
 Predict:
@@ -41,12 +44,6 @@ su
 echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/acton.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc
 ```
 
-Scripts:
--------
-```
-git clone https://github.com/pfranchini/weather-satellites.git ~/Satellite/code
-```
-
 APT decoder:
 -----------
 ```
@@ -54,7 +51,7 @@ cd ~/Satellite
 wget https://wxtoimgrestored.xyz/downloads/wxtoimg-linux64-2.10.11-1.tar.gz
 mkdir ~/Satellite/wxtoimg
 tar xvf wxtoimg-linux64-2.10.11-1.tar.gz -C ~/Satellite/wxtoimg/
-ln -s usr/local/bin/wxtoimg ~/Satellite/wxtoimg/wxtoimg
+ln -s ~/Satellite/wxtoimg/usr/local/bin/wxtoimg ~/Satellite/wxtoimg/wxtoimg
 ```
 Register WXtoImg as in https://wxtoimgrestored.xyz
 
@@ -71,8 +68,10 @@ make install
 LRPT decoder:
 ------------
 git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
+su
 yum install fpc
-./build_medet
+cd ~/Satellite/meteor_decoder
+./build_medet.sh
 
 Usage:
 =====
