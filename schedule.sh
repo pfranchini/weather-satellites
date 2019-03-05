@@ -28,7 +28,7 @@ fi
 rm -fr passages.*
 
 # Update Satellite Information
-echo "Update Satellite Information..."
+echo -e "\nUpdate Satellite Information..."
 wget -qr https://www.celestrak.com/NORAD/elements/weather.txt -O weather.txt
 if [ "$?" -eq "0" ]; then
     grep "NOAA 15" weather.txt -A 2 > weather.tle
@@ -78,9 +78,10 @@ for sat in "NOAA 15" "NOAA 18" "NOAA 19" "METEOR-M 2"; do
 done
 
 if [ -f passages.tmp ]; then
+    
+    echo -e "\nStart              Stop               Satellite   Max El"
+    echo    "========================================================="
 
-    echo -e "\nStart                         Stop                          Satellite \t Max El"
-    echo    "==============================================================================="
     sort passages.tmp | uniq > passages.txt
     rm passages.tmp
 
@@ -93,7 +94,7 @@ if [ -f passages.tmp ]; then
     # Submit new jobs
     while read line; do
 	
-	echo "$line"
+	echo "$line" | awk '{print $2 " " $3 "   " $5 " " $6 "   " $7 "" $8 "\t  " $9}'
 	
 	# pass the unix time
 	sat=`echo $line | awk '{print $7 " " $8}'`
