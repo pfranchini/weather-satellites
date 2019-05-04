@@ -1,7 +1,7 @@
 #!/bin/bash
 HOST=ftp.paolofranchini.altervista.org
 USER=paolofranchini
-PASS=hB8bbSsJPQNN
+PASS=
 TARGETFOLDER_NOAA='weather/noaa/'
 SOURCEFOLDER_NOAA='/home/franchini/Satellite/code/noaa/'
 TARGETFOLDER_METEOR='weather/meteor/'
