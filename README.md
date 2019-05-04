@@ -67,25 +67,28 @@ make install
 
 LRPT decoder:
 ------------
+```
 git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
 su
 yum install fpc
 cd ~/Satellite/meteor_decoder
 ./build_medet.sh
+```
 
 Usage:
 =====
 ```
 cd ~/Satellite/code
 ```
-Edit config.cfg
+edit config.cfg.
+You can manually run the script
 ```
 ./schedule.sh
 ```
 or as a cronjob to be run every day early morning, i.e.:
 
 ```
-01 00 * * * ~/Satellite/code/schedule.sh
+01 00 * * * cd ~/Satellite/code; ~/Satellite/code/schedule.sh
 ```
 
 Logs in: recordings.log, errors.log, jobs.log.
