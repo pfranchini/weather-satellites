@@ -1,4 +1,4 @@
-# Weather satellites scheduling and processing code for Linux
+# Weather satellites code for Linux
 
 Automatic scheduling and processing for polar weather satellites passages (NOAA, METEOR) in bash scripts.
 
