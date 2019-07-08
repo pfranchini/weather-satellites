@@ -96,6 +96,10 @@ Logs in: recordings.log, errors.log, jobs.log.
 
 Output as speficied in config.cfg.
 
-
-
+More:
+====
+In order to reprocess a bunch of NOAAs audio files
+```
+./apt_reprocess.sh <directory_path_where_noaa_audios_are>  
+```
 

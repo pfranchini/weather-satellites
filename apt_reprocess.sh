@@ -1,8 +1,11 @@
-##################
+######################################################################
 #
-# Usage: ./apt_reprocess.sh <directory_path_where_nooa_audios_are>
+# Reprocess all the NOAAs audio files (in case of different
+# settings in apt.sh)
 #
-##################
+# Usage: ./apt_reprocess.sh <directory_path_where_noaa_audios_are>
+#
+######################################################################
 
 dir=`pwd`
 rm -rf $dir/job
