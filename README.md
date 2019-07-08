@@ -4,6 +4,7 @@ Automatic scheduling and processing for polar weather satellites passages (NOAA,
 
 - Works for APT for NOAA 15, 18, 19
 - First working attempts for LRPT METEOR M2
+- Added TLE name/frequency for upcoming LRPT METEOR M2 2
 - List the passages for the current day above a minimum elevation
 - Submit jobs on the 'at' queue for each passage
 - Each NOOA's job records the audio of the passages (rtl_fm), resample it (sox) and produce VISIBLE and IR pictures with a map overlay (wxtoimg, wxmap)

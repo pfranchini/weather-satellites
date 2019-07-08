@@ -1,9 +1,8 @@
-# Working... to be finished and tested
+# Working... to be finished and tested again
 
-#demod=/home/franchini/Satellite/METEOR/meteor_demod/meteor_demod
-#decoder=/home/franchini/Satellite/METEOR/meteor_decoder/medet
-
+####################
 source config.cfg
+####################
 
 file=$1
 

@@ -2,7 +2,6 @@
 
 ###############################################
 source config.cfg
-#output=/home/franchini/Satellite/code
 ###############################################
 
 mkdir -p $output/noaa
@@ -38,6 +37,10 @@ if [ "$sat" == "METEOR-M2" ]; then
     frequency=137.900
     sampling=120
 fi
+if [ "$sat" == "METEOR-M22" ]; then
+    frequency=137.100
+    sampling=120
+fi
 
 # Logging:
 echo `date --date=@${start} +%Y%m%d-%H%M%S` $sat $elevation>> recordings.log
@@ -64,7 +67,7 @@ if [ "$specie" == "NOAA" ]; then
 
 fi
 
-if [ "$specie" == "METEOR-M" ]; then
+if [ "$specie" == "METEOR-M" ] || [ "$specie" == "METEOR-M2" ]; then
     # Record:
     # from https://www.reddit.com/r/RTLSDR/comments/abn29d/automatic_meteor_m2_reception_on_linux_using_rtl/
     echo "timeout $rectime rtl_fm -M raw -f ${frequency}M -s ${sampling}k -g 48 -p 0.0 | sox -t raw -r ${sampling}k -c 2 -b 16 -e s - -t wav ${output}/meteor/${filename}.wav rate 96k" > job.txt

@@ -35,6 +35,7 @@ if [ "$?" -eq "0" ]; then
     grep "NOAA 18" weather.txt -A 2 >> weather.tle
     grep "NOAA 19" weather.txt -A 2 >> weather.tle
     grep "METEOR-M 2" weather.txt -A 2 >> weather.tle
+    grep "METEOR-M2 2" weather.txt -A 2 >> weather.tle
     rm -rf weather.txt
     echo "...done"
 else
@@ -45,7 +46,7 @@ echo -e "\nMinimum elevation:" $min_el
 
 today=`date +'%Y%m%d'`
 
-for sat in "NOAA 15" "NOAA 18" "NOAA 19" "METEOR-M 2"; do
+for sat in "NOAA 15" "NOAA 18" "NOAA 19" "METEOR-M 2" "METEOR-M2 2"; do
     
     time=`date +%s`
     
@@ -103,7 +104,7 @@ if [ -f passages.tmp ]; then
 	elevation=`echo $line | awk '{print $9}'`
 
 	source submit_job.sh $sat $start $stop $elevation
-
+	
     done < passages.txt
 
     less recordings.log | sort | uniq > recordings.tmp

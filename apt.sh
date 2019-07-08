@@ -1,10 +1,7 @@
 
 ######################
 source config.cfg
-#dir=/home/franchini/Satellite/code
-#output=/home/franchini/Satellite/code
-#wxdir=/home/franchini/Satellite/wxtoimg/usr/local/bin/
-#####################
+######################
 
 
 file=$1   # full path
