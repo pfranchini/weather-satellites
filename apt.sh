@@ -61,6 +61,15 @@ if  [ ! -z "$error" ]; then
     echo $file $error >> errors.log
 fi
 
+# MSA:
+$wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 MSA" -e MSA -c -y low -o ${file}_res.wav $file-MSA.png &> MSA.log
+cat MSA.log
+error=`cat MSA.log | grep -i "warning"`
+if  [ ! -z "$error" ]; then
+    mv $file-MSA.png $output/noaa/deleted/
+    echo $file $error >> errors.log
+fi
+
 # Clean up
 rm -rf ${file}-map.png
 rm -rf ${file}_res.wav
@@ -68,6 +77,7 @@ rm -rf  wxtoimg.log
 rm -rf IR.log
 rm -rf HVC.log
 rm -rf HVCT.log
+rm -rf MSA.log
 
 #if [[ "$direction" == "southbound" ]]; then
 #   echo "Rotate: "
