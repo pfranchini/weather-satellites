@@ -38,7 +38,7 @@ if [ "$sat" == "METEOR-M2" ]; then
     sampling=120
 fi
 if [ "$sat" == "METEOR-M22" ]; then
-    frequency=137.100
+    frequency=137.900
     sampling=120
 fi
 
@@ -69,8 +69,12 @@ fi
 
 if [ "$specie" == "METEOR-M" ] || [ "$specie" == "METEOR-M2" ]; then
     # Record:
+
+    # Priority to Meteor's
+    echo "pkill -9 rtl_fm" > job.txt
+
     # from https://www.reddit.com/r/RTLSDR/comments/abn29d/automatic_meteor_m2_reception_on_linux_using_rtl/
-    echo "timeout $rectime rtl_fm -M raw -f ${frequency}M -s ${sampling}k -g 48 -p 0.0 | sox -t raw -r ${sampling}k -c 2 -b 16 -e s - -t wav ${output}/meteor/${filename}.wav rate 96k" > job.txt
+    echo "timeout $rectime rtl_fm -M raw -f ${frequency}M -s ${sampling}k -g 48 -p 0.0 | sox -t raw -r ${sampling}k -c 2 -b 16 -e s - -t wav ${output}/meteor/${filename}.wav rate 96k" >> job.txt
     
     # Resample and Decode:
     echo "/bin/bash lrpt.sh ${output}/meteor/${filename} &>> jobs.log" >> job.txt

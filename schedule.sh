@@ -87,7 +87,7 @@ if [ -f passages.tmp ]; then
     rm passages.tmp
 
     # Kill any 'rtl_fm' that might be still running (any midnight passage??)
-    pkill rtl_fm
+    pkill -9 rtl_fm
     
     # Remove old 'at' jobs
     for i in `atq | awk '{print $1}'`; do atrm $i; done
