@@ -1,6 +1,6 @@
 ######################################################################
 #
-# Reprocess all the NOAAs audio files (in case of different
+# Reprocess all the NOAAs audio files (in case of chnges of
 # settings in apt.sh)
 #
 # Usage: ./apt_reprocess.sh <directory_path_where_noaa_audios_are>
