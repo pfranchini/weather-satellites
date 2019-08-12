@@ -13,7 +13,7 @@ if [ `wc -c <${file}.wav` -le 1000000 ]; then
 fi
 
 # Normalise:
-sox $file.wav ${file}_norm.wav gain -n
+sox $file.wav ${file}_norm.wav channels 1 gain -n
 
 # Demodulate:                                                                                                                                                           
 yes | $demod -B -o ${file}.qpsk ${file}_norm.wav    

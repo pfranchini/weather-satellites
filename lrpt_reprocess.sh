@@ -12,10 +12,15 @@ rm -rf $dir/job
 
 for filename in `ls $1/*.wav | sed -e 's/\..*$//' | grep -v res`; do
 
-    echo "./lrpt.sh $filename" >> $dir/job
+    if [[ ! -f "${filename}.png" ]]; then
+	
+	echo $filename
+	echo "./lrpt.sh $filename" >> $dir/job
 
+    fi
+    
 done
 
 cd $dir
 bash job
-rm job
+rm -f job
