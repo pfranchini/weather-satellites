@@ -1,4 +1,5 @@
 # Working... to be finished and tested again
+# implemente oqpsk from meteor_demod
 
 ####################
 source config.cfg
@@ -13,13 +14,19 @@ if [ `wc -c <${file}.wav` -le 1000000 ]; then
 fi
 
 # Normalise:
-sox $file.wav ${file}_norm.wav channels 1 gain -n
+sox ${file}.wav ${file}_norm.wav channels 1 gain -n
 
 # Demodulate:                                                                                                                                                           
-yes | $demod -B -o ${file}.qpsk ${file}_norm.wav    
+if [[ ${file: -2} == "M2" ]]; then
+    yes | $demod -B -o ${file}.qpsk ${file}_norm.wav    
+else
+    yes | $demod -B -m oqpsk -o ${file}.qpsk ${file}_norm.wav
+fi
+touch -r ${file}.wav ${file}.qpsk
 
 # Decode:
 $decoder ${file}.qpsk ${file} -cd -q
+touch -r ${file}.wav ${file}.dec
 
 # Create image:
 # only composite
@@ -30,6 +37,7 @@ $decoder ${file}.dec ${file} -r 65 -g 65 -b 64 -d -q
 if [[ -f "${file}.bmp" ]]; then
   convert ${file}.bmp ${file}.png
   rm -f ${file}.bmp
+  touch -r ${file}.wav ${file}.png
 fi
 
 rm -f ${file}_norm.wav
