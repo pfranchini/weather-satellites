@@ -3,8 +3,8 @@
 Automatic scheduling and processing for polar weather satellites passages (NOAA, METEOR) in bash scripts.
 
 - Works for APT for NOAA 15, 18, 19
-- First working attempts for LRPT METEOR M2
-- Added TLE name/frequency for upcoming LRPT METEOR M2 2
+- First working attempts for LRPT METEOR M2 and METEOR M2-2
+- Added TLE name/frequency/demod options for upcoming LRPT METEOR M2-2
 - List the passages for the current day above a minimum elevation
 - Submit jobs on the 'at' queue for each passage
 - Each NOOA's job records the audio of the passages (rtl_fm), resample it (sox) and produce VISIBLE and IR pictures with a map overlay (wxtoimg, wxmap)
@@ -12,7 +12,9 @@ Automatic scheduling and processing for polar weather satellites passages (NOAA,
 - NOAA's passages with audio file too small are not processed (something wrong happened during the recording)
 - NOAA's images that trigger some warnings of wxtoimg are moved into a deleted/ folder (usually the visible channel was off or the S/N was too low)
 - A recording in progress prevents any other recording scheduled, so there is not a check of eventual overlaps
+- A METEOR passage will stop any other running acquisition (that will be normally processed)
 - Each time the scheduler starts cleans the 'at' queue and all the running 'rlt_fm' jobs that might be stuck in the system
+- Single config file (but still some other hardcoded parameters)
 
 Paolo Franchini 2019 - pfranchini@gmail.com
 
