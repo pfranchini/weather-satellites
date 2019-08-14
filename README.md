@@ -15,6 +15,7 @@ Automatic scheduling and processing for polar weather satellites passages (NOAA,
 - A METEOR passage will stop any other running acquisition (that will be normally processed)
 - Each time the scheduler starts cleans the 'at' queue and all the running 'rlt_fm' jobs that might be stuck in the system
 - Single config file (but still some other hardcoded parameters)
+- Tested only on Fedora
 
 Paolo Franchini 2019 - pfranchini@gmail.com
 
@@ -96,12 +97,13 @@ or as a cronjob to be run every day early morning, i.e.:
 
 Logs in: recordings.log, errors.log, jobs.log.
 
-Output as speficied in config.cfg.
+Output images (png files) as speficied in config.cfg.
 
 More:
 ====
-In order to reprocess a bunch of NOAAs audio files
+In order to reprocess a bunch of audio files
 ```
 ./apt_reprocess.sh <directory_path_where_noaa_audios_are>  
+./lrpt_reprocess.sh <directory_path_where_meteor_audios_are>  
 ```
 
