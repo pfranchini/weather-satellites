@@ -26,7 +26,7 @@ Various prerequisites:
 ---------------------
 ```
 yum install gcc ncurses-devel rtl-sdr sox at git
-(yum install ImageMagick)
+yum install ImageMagick
 (yum install gqrx)
 
 mkdir ~/Satellite
