@@ -19,26 +19,26 @@ rectime=$[$stop-$start]
 at_start=`date --date=@${start} +%H:%M`
 
 if [ "$sat" == "NOAA15" ]; then
-   #frequency=137.620
-    frequency=137.614
+    #frequency=137.620
+    frequency=${NOAA15}
     sampling=40
 fi
 if [ "$sat"  == "NOAA18" ]; then
-   #frequency=137.9125
-    frequency=137.906
+    #frequency=137.9125
+    frequency=${NOAA18}
     sampling=40
 fi
 if [ "$sat" == "NOAA19" ]; then
-   #frequency=137.100
-    frequency=137.092
+    #frequency=137.100
+    frequency=${NOAA19}
     sampling=40
 fi
 if [ "$sat" == "METEOR-M2" ]; then
-    frequency=137.900
+    frequency=${METEORM2}
     sampling=120
 fi
 if [ "$sat" == "METEOR-M22" ]; then
-    frequency=137.900
+    frequency=${METEORM22}
     sampling=120
 fi
 

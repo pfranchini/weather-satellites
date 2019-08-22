@@ -1,5 +1,5 @@
 # Working... to be finished and tested again
-# implemente oqpsk from meteor_demod
+# implemented oqpsk from meteor_demod
 
 ####################
 source config.cfg
@@ -38,6 +38,7 @@ if [[ -f "${file}.bmp" ]]; then
   convert ${file}.bmp ${file}.png
   rm -f ${file}.bmp
   touch -r ${file}.wav ${file}.png
+  echo -e "\nImage created!"
 fi
 
 rm -f ${file}_norm.wav
