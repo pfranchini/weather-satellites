@@ -19,31 +19,25 @@ sox ${file}.wav ${file}_norm.wav gain -n
 
 # Demodulate:                                                                                                                                                           
 if [[ ${file: -2} == "M2" ]]; then
-    yes | $demod -B -m qpsk  -o ${file}.qpsk ${file}_norm.wav    
+    yes | $demod -B -o ${file}.qpsk ${file}_norm.wav    
 else
     yes | $demod -B -m oqpsk -o ${file}.qpsk ${file}_norm.wav
 fi
 touch -r ${file}.wav ${file}.qpsk
 
 # Decode:
-if [[ ${file: -2} == "M2" ]]; then
-    $decoder ${file}.qpsk ${file} -cd -q
-else
-    $decoder ${file}.qpsk ${file} -int -cd -q
-fi
-touch -r ${file}.wav ${file}.dec
+#$decoder ${file}.qpsk ${file} -cd -q
+#touch -r ${file}.wav ${file}.dec
 
 # Create image:
 # only composite
-$decoder ${file}.dec ${file} -r 65 -g 65 -b 64 -d -q
-# three channels
-# $decoder ${file}.dec ${file} -S -r 65 -g 65 -b 64 -d -q
 
-if [[ -f "${file}.bmp" ]]; then
-  convert ${file}.bmp ${file}.png
-  rm -f ${file}.bmp
-  touch -r ${file}.wav ${file}.png
-  echo -e "\nImage created!"
+#$decoder ${file}.dec ${file} -r 65 -g 65 -b 64 -d -q
+/home/franchini/Satellite/METEOR/meteor_decode_dev/src/meteor_decode -q -d -a 65,65,64 -o ${file}.png ${file}.qpsk
+
+if [[ -f "${file}.png" ]]; then
+    touch -r ${file}.wav ${file}.png
+    echo -e "\nImage created!"
 fi
 
 rm -f ${file}_norm.wav

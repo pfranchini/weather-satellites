@@ -15,21 +15,21 @@ fi
 
 # Normalise:
 #sox ${file}.wav ${file}_norm.wav channels 1 gain -n
-sox ${file}.wav ${file}_norm.wav gain -n
+#sox ${file}.wav ${file}_norm.wav gain -n
 
 # Demodulate:                                                                                                                                                           
-if [[ ${file: -2} == "M2" ]]; then
-    yes | $demod -B -m qpsk  -o ${file}.qpsk ${file}_norm.wav    
-else
-    yes | $demod -B -m oqpsk -o ${file}.qpsk ${file}_norm.wav
-fi
-touch -r ${file}.wav ${file}.qpsk
+#if [[ ${file: -2} == "M2" ]]; then
+#    yes | $demod -B -m qpsk  -o ${file}.qpsk ${file}_norm.wav    
+#else
+#    yes | $demod -B -m oqpsk -o ${file}.qpsk ${file}_norm.wav
+#fi
+#touch -r ${file}.wav ${file}.qpsk
 
 # Decode:
 if [[ ${file: -2} == "M2" ]]; then
     $decoder ${file}.qpsk ${file} -cd -q
 else
-    $decoder ${file}.qpsk ${file} -int -cd -q
+    $decoder ${file}.qpsk ${file} -int -diff -cd -q
 fi
 touch -r ${file}.wav ${file}.dec
 
