@@ -13,13 +13,13 @@ if [ ! -f $where ]; then
     echo "Location file does not exist. Check config.cfg"
 fi
 if [ ! -f $demod ]; then
-    echo "Meteor demodulator wrong location. Check config.cfg"
+    echo "Meteor demodulator wrong path. Check config.cfg"
 fi
 if [ ! -f $decoder ]; then
-    echo "Meteor decoder wrong location. Check config.cfg"
+    echo "Meteor decoder wrong path. Check config.cfg"
 fi
 if [ ! -d $wxdir ]; then
-    echo "WxToImg wrong location. Check config.cfg"
+    echo "WxToImg wrong path. Check config.cfg"
 fi
 if [ ! -d $dir ]; then
     echo "Wrong code directory. Check config.cfg"
