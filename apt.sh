@@ -3,12 +3,16 @@
 source config.cfg
 ######################
 
-
-file=$1   # full path
+file=$1   # full path without extension
 filename=`basename $file` # filename used to extract variables for the map
 
 echo -e "\n\033[1m$file\033[0m"
 
+if [ ! -f "${file}.wav" ]; then
+    echo "Wrong audio file name... exit"
+    exit
+fi
+    
 if [ `wc -c <${file}.wav` -le 1000000 ]; then
     echo "Audio file ${file}.wav too small, probably wrong recording"
     exit
@@ -44,36 +48,44 @@ if  [ ! -z "$error" ]; then
     echo $file $error >> errors.log
 fi
 
-# VIS:
-$wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 HVC" -e HVC -c -y low -o ${file}_res.wav $file-HVC.png &> HVC.log
-cat HVC.log
-error=`cat HVC.log | grep -i "warning"`
-if  [ ! -z "$error" ]; then
-    mv $file-HVC.png $output/noaa/deleted/
-    echo $file $error >> errors.log
+# check if there is a visible channel and not only two IR
+visible=`cat IR.log | grep -i "visible"`
+if  [ ! -z "$visible" ]; then
+
+    # VIS:
+    $wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 HVC" -e HVC -c -y low -o ${file}_res.wav $file-HVC.png &> HVC.log
+    cat HVC.log
+    error=`cat HVC.log | grep -i "warning"`
+    if  [ ! -z "$error" ]; then
+	mv $file-HVC.png $output/noaa/deleted/
+	echo $file $error >> errors.log
+    fi
+    
+    $wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 HVCT" -e HVCT -c -y low -o ${file}_res.wav $file-HVCT.png &> HVCT.log
+    cat HVCT.log 
+    error=`cat HVCT.log | grep -i "warning"`
+    if  [ ! -z "$error" ]; then
+	mv $file-HVCT.png $output/noaa/deleted/
+	echo $file $error >> errors.log
+    fi
+    
+    # MSA:
+    $wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 MSA" -e MSA -c -y low -o ${file}_res.wav $file-MSA.png &> MSA.log
+    cat MSA.log
+    error=`cat MSA.log | grep -i "warning"`
+    if  [ ! -z "$error" ]; then
+	mv $file-MSA.png $output/noaa/deleted/
+	echo $file $error >> errors.log
+    fi
+
+else
+    echo "Only 2 IR channels, no visible present"
 fi
 
-$wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 HVCT" -e HVCT -c -y low -o ${file}_res.wav $file-HVCT.png &> HVCT.log
-cat HVCT.log 
-error=`cat HVCT.log | grep -i "warning"`
-if  [ ! -z "$error" ]; then
-    mv $file-HVCT.png $output/noaa/deleted/
-    echo $file $error >> errors.log
-fi
-
-# MSA:
-$wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 MSA" -e MSA -c -y low -o ${file}_res.wav $file-MSA.png &> MSA.log
-cat MSA.log
-error=`cat MSA.log | grep -i "warning"`
-if  [ ! -z "$error" ]; then
-    mv $file-MSA.png $output/noaa/deleted/
-    echo $file $error >> errors.log
-fi
-
-# Clean up
+# clean up
 rm -rf ${file}-map.png
 rm -rf ${file}_res.wav
-rm -rf  wxtoimg.log
+rm -rf wxtoimg.log
 rm -rf IR.log
 rm -rf HVC.log
 rm -rf HVCT.log
@@ -87,6 +99,5 @@ rm -rf MSA.log
 
 #convert -rotate 180 ${file}-map.png ${file}-map.png
 
-#rm ${file}-map.png
 #convert -rotate 180 $file.png $file.png
 #eog $file.png

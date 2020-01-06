@@ -2,22 +2,25 @@
 
 Automatic scheduling and processing for polar weather satellites passages (NOAA, METEOR) in bash scripts.
 
-- Works for APT for NOAA 15, 18, 19
-- First working attempts for LRPT METEOR M2 and METEOR M2-2
-- Added TLE name/frequency/demod options for upcoming LRPT METEOR M2-2
+- Works for APT of NOAA 15, 18, 19
+- Works for LRPT of METEOR M2
+- First working attempts for LRPT METEOR M2-2 (added TLE name/frequency/demod options)
 - List the passages for the current day above a minimum elevation
-- Submit jobs on the 'at' queue for each passage
-- Each NOOA's job records the audio of the passages (rtl_fm), resample it (sox) and produce VISIBLE and IR pictures with a map overlay (wxtoimg, wxmap)
-- Each METEOR's job records the raw data of the passages (rtl_fm), demodulate it (demod), decode (decod) it and produce an RGB picture
+- Submit jobs on the linux 'at' queue for each passage
+- Each NOOA's job records the audio of the passages (rtl_fm), resample it (sox) and produce when possible VISIBLE and IR pictures with a map overlay (wxtoimg, wxmap)
+- Each METEOR's job records the raw data of the passages (rtl_fm), demodulate it (demod), decode (decod) it and produce a composite VISIBLE and IR pictures
 - NOAA's passages with audio file too small are not processed (something wrong happened during the recording)
-- NOAA's images that trigger some warnings of wxtoimg are moved into a deleted/ folder (usually the visible channel was off or the S/N was too low)
+- NOAA's images that trigger some warnings of wxtoimg are moved into a deleted/ folder (usually the S/N was too low)
+- NOAA's visible images are produced only if the visible channel is active, otherwise only the combined IR is produced
+- METEOR's IR image is produced together with the composite one
+- METEOR's images with low brightness are moved into the deleted/ folder (usually was a bad acquisition)
 - A recording in progress prevents any other recording scheduled, so there is not a check of eventual overlaps
 - A METEOR passage will stop any other running acquisition (that will be normally processed)
 - Each time the scheduler starts cleans the 'at' queue and all the running 'rlt_fm' jobs that might be stuck in the system
 - Single config file (but still some other hardcoded parameters)
 - Tested only on Fedora
 
-Paolo Franchini 2019 - pfranchini@gmail.com
+Paolo Franchini 2020 - pfranchini@gmail.com
 
 Setup:
 =====
@@ -76,7 +79,7 @@ git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
 su
 yum install fpc
 cd ~/Satellite/meteor_decoder
-./build_medet.sh
+source build_medet.sh
 ```
 
 Usage:

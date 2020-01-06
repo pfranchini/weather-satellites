@@ -1,5 +1,6 @@
-.gitignore
 *.log
 *~
 passages.txt
-job
+job*
+*/
+.*

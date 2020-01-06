@@ -42,12 +42,13 @@ else
     echo "...no network"
 fi
 
+echo -e "\nSatellites: ${SATELLITES[@]}"
 echo -e "\nMinimum elevation:" $min_el
 
 today=`date +'%Y%m%d'`
 
-for sat in "NOAA 15" "NOAA 18" "NOAA 19" "METEOR-M 2" "METEOR-M2 2"; do
-    
+for sat in "${SATELLITES[@]}"; do
+
     time=`date +%s`
     
     while [ `date -d @$time +%Y%m%d` -eq "$today" ]; do
@@ -113,7 +114,6 @@ if [ -f passages.tmp ]; then
 else
     echo -e "\nNo passages for today"
 fi
-
 
 echo " "
 

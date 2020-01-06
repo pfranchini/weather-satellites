@@ -7,6 +7,7 @@ source config.cfg
 mkdir -p $output/noaa
 mkdir -p $output/noaa/deleted
 mkdir -p $output/meteor
+mkdir -p $output/meteor/deleted
 
 sat="$1$2"
 start=$3
@@ -19,17 +20,14 @@ rectime=$[$stop-$start]
 at_start=`date --date=@${start} +%H:%M`
 
 if [ "$sat" == "NOAA15" ]; then
-    #frequency=137.620
     frequency=${NOAA15}
     sampling=40
 fi
 if [ "$sat"  == "NOAA18" ]; then
-    #frequency=137.9125
     frequency=${NOAA18}
     sampling=40
 fi
 if [ "$sat" == "NOAA19" ]; then
-    #frequency=137.100
     frequency=${NOAA19}
     sampling=40
 fi
