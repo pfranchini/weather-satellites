@@ -1,24 +1,26 @@
 # Weather satellites code for Linux
 
-Automatic scheduling and processing for polar weather satellites passages (NOAA, METEOR) in bash scripts.
+Automatic scheduling and processing for polar weather satellites passages (NOAA, METEOR) in bash scripts using third party software.
 
 - Works for APT of NOAA 15, 18, 19
 - Works for LRPT of METEOR M2
-- First working attempts for LRPT METEOR M2-2 (added TLE name/frequency/demod options)
-- List the passages for the current day above a minimum elevation
+- (First working attempts for LRPT METEOR M2-2 (added TLE name/frequency/demod options) - satellite not available)
+- List the passages for the current day above a minimum elevation using Predict
 - Submit jobs on the linux 'at' queue for each passage
-- Each NOOA's job records the audio of the passages (rtl_fm), resample it (sox) and produce when possible VISIBLE and IR pictures with a map overlay (wxtoimg, wxmap)
-- Each METEOR's job records the raw data of the passages (rtl_fm), demodulate it (demod), decode (decod) it and produce a composite VISIBLE and IR pictures
+- Each NOOA's job records the audio of the passages (rtl_fm), resamples it (sox) and produces, if possible several VISIBLE and IR pictures with a map overlay (wxtoimg, wxmap)
+- Each METEOR's job records the raw data of the passages (rtl_fm), demodulates it (demod), decodes (decode) it and produces a composite VISIBLE and IR pictures
 - NOAA's passages with audio file too small are not processed (something wrong happened during the recording)
 - NOAA's images that trigger some warnings of wxtoimg are moved into a deleted/ folder (usually the S/N was too low)
 - NOAA's visible images are produced only if the visible channel is active, otherwise only the combined IR is produced
-- METEOR's IR image is produced together with the composite one
-- METEOR's images with low brightness are moved into the deleted/ folder (usually was a bad acquisition)
+- METEOR's IR image is produced together with the composite one if both channels are active
+- METEOR's images with low brightness are moved into the deleted/ folder (usually was a bad acquisition or late evening)
 - A recording in progress prevents any other recording scheduled, so there is not a check of eventual overlaps
 - A METEOR passage will stop any other running acquisition (that will be normally processed)
 - Each time the scheduler starts cleans the 'at' queue and all the running 'rlt_fm' jobs that might be stuck in the system
-- Single config file (but still some other hardcoded parameters)
-- Tested only on Fedora
+- Single config file (but still some other hardcoded parameters for the recordings) with minimal sets of checks of it
+- Rectify implemented for METEOR's images
+- Included script to produce an animation from Mercator projections
+- Tested only on Fedora and partially on Raspberry Pi
 
 Paolo Franchini 2020 - pfranchini@gmail.com
 
@@ -28,9 +30,12 @@ Setup:
 Various prerequisites:
 ---------------------
 ```
-yum install gcc ncurses-devel rtl-sdr sox at git
+yum install gcc ncurses-devel rtl-sdr sox at bc git
 yum install ImageMagick
+yum install fpc
+yum install libjpeg*
 (yum install gqrx)
+(yum install ffmpeg)
 
 mkdir ~/Satellite
 ```
@@ -48,7 +53,7 @@ git clone https://github.com/kd2bd/predict/ ~/Satellite/predict
 cd ~/Satellite/predict
 su
 ./configure
-echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/acton.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc
+(echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/acton.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc)
 ```
 
 APT decoder:
@@ -77,36 +82,57 @@ LRPT decoder:
 ```
 git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
 su
-yum install fpc
 cd ~/Satellite/meteor_decoder
 source build_medet.sh
 ```
+
+Rectify:
+-------
+```
+cd ~/Satellite/
+wget http://www.5b4az.org/pkg/lrpt/rectify-jpg-0.3.tar.bz2
+tar xvf rectify-jpg-0.3.tar.bz2
+cd rectify-jpeg-0.3
+gcc rectify-jpg.c -lm -ljpeg -o rectify-jpg
+```
+
 
 Usage:
 =====
 ```
 cd ~/Satellite/code
 ```
-edit config.cfg.
-You can manually run the script
+create your own location file .qth and edit config.cfg with all the paths and other options..
+Now you can manually run the script
 ```
 ./schedule.sh
 ```
-or as a cronjob to be run every day early morning, i.e.:
-
+or as a cronjob to be run every day early morning, i.e. (the cd is mandatory):
 ```
 01 00 * * * cd ~/Satellite/code; ~/Satellite/code/schedule.sh
 ```
 
 Logs in: recordings.log, errors.log, jobs.log.
 
-Output images (png files) as speficied in config.cfg.
+Output images (png and jpg files) as speficied in config.cfg.
 
 More:
 ====
-In order to reprocess a bunch of audio files
+In order to reprocess a bunch of existing audio files
 ```
 ./apt_reprocess.sh <directory_path_where_noaa_audios_are>  
 ./lrpt_reprocess.sh <directory_path_where_meteor_audios_are>  
 ```
+it would preserve the original time stamp of the wave file.
 
+Animation (beta version):
+========================
+
+In order to create a MP4 video using Mercator projections for a cropped IR passage (the coordinates are hard coded)
+```
+./video.sh <list_of_files.wav>
+```
+e.g.
+```
+./video.sh noaa/20200711-*.wav noaa/20200712-*.wav
+```

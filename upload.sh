@@ -13,14 +13,8 @@ open $HOST
 user $USER $PASS
 
 mirror --reverse --delete --verbose -r -I *.png $SOURCEFOLDER_NOAA $TARGETFOLDER_NOAA
-mirror --reverse --delete --verbose -r -I *.bmp $SOURCEFOLDER_METEOR $TARGETFOLDER_METEOR
+mirror --reverse --delete --verbose -r -I *.jpg $SOURCEFOLDER_METEOR $TARGETFOLDER_METEOR
 "
-
-
-
-
-
-
 
 #bye
 

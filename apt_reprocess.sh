@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ######################################################################
 #
 # Reprocess all the NOAAs audio files (in case of chnges of

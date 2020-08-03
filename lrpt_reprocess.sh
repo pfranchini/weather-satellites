@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #######################################################################
 #
 # Reprocess all the METEORs audio files (in case of changes of 
@@ -12,7 +14,7 @@ rm -f $dir/job
 
 for filename in `ls $1/*.wav | sed -e 's/\..*$//' | grep -v res`; do
 
-    if [[ ! -f "${filename}.png" ]]; then
+    if [[ ! -f "${filename}.jpg" ]]; then
 	
 	echo $filename
 	echo "./lrpt.sh $filename" >> $dir/job
@@ -22,5 +24,5 @@ for filename in `ls $1/*.wav | sed -e 's/\..*$//' | grep -v res`; do
 done
 
 cd $dir
-#bash job
-#rm -f job
+bash job
+rm -f job
