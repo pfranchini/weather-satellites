@@ -29,6 +29,11 @@ Setup:
 
 Various prerequisites:
 ---------------------
+Create a directory for the scripts and for the output images in your home directory:
+```
+mkdir ~/Satellite
+```
+Install the followings as superuser. Use `yum` for Fedora-like and `apt` for Ubuntu-like distos, e.g.:
 ```
 yum install gcc ncurses-devel rtl-sdr sox at bc git
 yum install ImageMagick
@@ -36,8 +41,6 @@ yum install fpc
 yum install libjpeg*
 (yum install gqrx)
 (yum install ffmpeg)
-
-mkdir ~/Satellite
 ```
 
 Scripts:
@@ -102,19 +105,19 @@ Usage:
 ```
 cd ~/Satellite/code
 ```
-create your own location file .qth and edit config.cfg with all the paths and other options..
+create your own location file `.qth` and edit `config.cfg` with all the paths and other options.
 Now you can manually run the script
 ```
 ./schedule.sh
 ```
-or as a cronjob to be run every day early morning, i.e. (the cd is mandatory):
+or as a cronjob to be run every day early morning, i.e. (the `cd` is mandatory):
 ```
 01 00 * * * cd ~/Satellite/code; ~/Satellite/code/schedule.sh
 ```
 
-Logs in: recordings.log, errors.log, jobs.log.
+Logs in: `recordings.log`, `errors.log`, `jobs.log`.
 
-Output images (png and jpg files) as speficied in config.cfg.
+Output images (png and jpg files) as speficied in `config.cfg`.
 
 More:
 ====
@@ -127,7 +130,6 @@ it would preserve the original time stamp of the wave file.
 
 Animation (beta version):
 ========================
-
 In order to create a MP4 video using Mercator projections for a cropped IR passage (the coordinates are hard coded)
 ```
 ./video.sh <list_of_files.wav>
