@@ -76,17 +76,15 @@ LRPT demodulator:
 git clone https://github.com/dbdexter-dev/meteor_demod ~/Satellite/meteor_demod
 cd ~/Satellite/meteor_demod
 make
-su
-make install
+sudo make install
 ```
 
 LRPT decoder:
 ------------
 ```
 git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
-su
 cd ~/Satellite/meteor_decoder
-source build_medet.sh
+./build_medet.sh
 ```
 
 Rectify:
