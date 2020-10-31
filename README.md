@@ -64,6 +64,10 @@ APT decoder:
 ```
 cd ~/Satellite
 wget https://wxtoimgrestored.xyz/downloads/wxtoimg-linux64-2.10.11-1.tar.gz
+```
+or for Raspberry Pi
+```
+wxtoimg-linux-armhf-2.11.2-beta.tar.gz 
 mkdir ~/Satellite/wxtoimg
 tar xvf wxtoimg-linux64-2.10.11-1.tar.gz -C ~/Satellite/wxtoimg/
 ln -s ~/Satellite/wxtoimg/usr/local/bin/wxtoimg ~/Satellite/wxtoimg/wxtoimg
