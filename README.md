@@ -20,7 +20,7 @@ Automatic scheduling and processing for polar weather satellites passages (NOAA,
 - Single config file (but still some other hardcoded parameters for the recordings) with minimal sets of checks of it
 - Rectify implemented for METEOR's images
 - Included script to produce an animation from Mercator projections
-- Tested only on Fedora and partially on Raspberry Pi
+- Tested on Fedora and on Raspberry Pi
 
 Paolo Franchini 2020 - pfranchini@gmail.com
 
