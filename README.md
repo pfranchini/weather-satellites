@@ -54,9 +54,8 @@ Predict:
 ```
 git clone https://github.com/kd2bd/predict/ ~/Satellite/predict
 cd ~/Satellite/predict
-su
-./configure
-(echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/acton.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc)
+sudo ./configure
+(echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/<location>.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc)
 ```
 
 APT decoder:
@@ -71,7 +70,7 @@ mkdir ~/Satellite/wxtoimg
 tar xvf wxtoimg-linux64-2.10.11-1.tar.gz -C ~/Satellite/wxtoimg/
 ln -s ~/Satellite/wxtoimg/usr/local/bin/wxtoimg ~/Satellite/wxtoimg/wxtoimg
 ```
-Register WXtoImg as in https://wxtoimgrestored.xyz
+Register WXtoImg as in https://wxtoimgrestored.xyz/downloads
 
 LRPT demodulator:
 ----------------
