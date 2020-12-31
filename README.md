@@ -20,7 +20,7 @@ Automatic scheduling and processing for polar weather satellites passages (NOAA,
 - Single config file (but still some other hardcoded parameters for the recordings) with minimal sets of checks of it
 - Rectify implemented for METEOR's images
 - Included script to produce an animation from Mercator projections
-- Tested only on Fedora and partially on Raspberry Pi
+- Tested on Fedora and on Raspberry Pi
 
 Paolo Franchini 2020 - pfranchini@gmail.com
 
@@ -29,6 +29,11 @@ Setup:
 
 Various prerequisites:
 ---------------------
+Create a directory for the scripts and for the output images in your home directory:
+```
+mkdir ~/Satellite
+```
+Install the followings as superuser. Use `yum` for Fedora-like and `apt` for Ubuntu-like distos, e.g.:
 ```
 yum install gcc ncurses-devel rtl-sdr sox at bc git
 yum install ImageMagick
@@ -36,8 +41,6 @@ yum install fpc
 yum install libjpeg*
 (yum install gqrx)
 (yum install ffmpeg)
-
-mkdir ~/Satellite
 ```
 
 Scripts:
@@ -51,9 +54,8 @@ Predict:
 ```
 git clone https://github.com/kd2bd/predict/ ~/Satellite/predict
 cd ~/Satellite/predict
-su
-./configure
-(echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/acton.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc)
+sudo ./configure
+(echo "alias predict='~/Satellite/predict/predict -q ~/Satellite/code/<location>.qth -t ~/Satellite/code/weather.tle'" >> ~/.bashrc)
 ```
 
 APT decoder:
@@ -61,11 +63,14 @@ APT decoder:
 ```
 cd ~/Satellite
 wget https://wxtoimgrestored.xyz/downloads/wxtoimg-linux64-2.10.11-1.tar.gz
+```
+or for Raspberry Pi `wxtoimg-linux-armhf-2.11.2-beta.tar.gz`
+```
 mkdir ~/Satellite/wxtoimg
 tar xvf wxtoimg-linux64-2.10.11-1.tar.gz -C ~/Satellite/wxtoimg/
 ln -s ~/Satellite/wxtoimg/usr/local/bin/wxtoimg ~/Satellite/wxtoimg/wxtoimg
 ```
-Register WXtoImg as in https://wxtoimgrestored.xyz
+Register WXtoImg as in https://wxtoimgrestored.xyz/downloads
 
 LRPT demodulator:
 ----------------
@@ -73,17 +78,15 @@ LRPT demodulator:
 git clone https://github.com/dbdexter-dev/meteor_demod ~/Satellite/meteor_demod
 cd ~/Satellite/meteor_demod
 make
-su
-make install
+sudo make install
 ```
 
 LRPT decoder:
 ------------
 ```
 git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
-su
 cd ~/Satellite/meteor_decoder
-source build_medet.sh
+./build_medet.sh
 ```
 
 Rectify:
@@ -102,19 +105,19 @@ Usage:
 ```
 cd ~/Satellite/code
 ```
-create your own location file .qth and edit config.cfg with all the paths and other options..
+create your own location file `.qth` and edit `config.cfg` with all the paths and other options.
 Now you can manually run the script
 ```
 ./schedule.sh
 ```
-or as a cronjob to be run every day early morning, i.e. (the cd is mandatory):
+or as a cronjob to be run every day early morning, i.e. (the `cd` is mandatory):
 ```
 01 00 * * * cd ~/Satellite/code; ~/Satellite/code/schedule.sh
 ```
 
-Logs in: recordings.log, errors.log, jobs.log.
+Logs in: `recordings.log`, `errors.log`, `jobs.log`.
 
-Output images (png and jpg files) as speficied in config.cfg.
+Output images (png and jpg files) as speficied in `config.cfg`.
 
 More:
 ====
@@ -127,7 +130,6 @@ it would preserve the original time stamp of the wave file.
 
 Animation (beta version):
 ========================
-
 In order to create a MP4 video using Mercator projections for a cropped IR passage (the coordinates are hard coded)
 ```
 ./video.sh <list_of_files.wav>
