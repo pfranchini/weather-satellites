@@ -37,7 +37,7 @@ sox ${file}.wav ${file}_norm.wav gain -n
 
 # Demodulate:
 if [[ ${file: -2} == "M2" ]]; then
-    yes | $demod -B -m qpsk  -o ${file}.qpsk ${file}_norm.wav
+    yes | $demod -B -m qpsk -o ${file}.qpsk ${file}_norm.wav
 else
     yes | $demod -B -b 50 -m oqpsk -o ${file}.qpsk ${file}_norm.wav 
 fi
