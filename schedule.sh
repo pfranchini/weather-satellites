@@ -41,6 +41,7 @@ if [ "$?" -eq "0" ]; then
     grep "NOAA 19" weather.txt -A 2 >> weather.tle
     grep "METEOR-M 2" weather.txt -A 2 >> weather.tle
     grep "METEOR-M2 2" weather.txt -A 2 >> weather.tle
+    grep "METEOR-M2 3" weather.txt -A 2 >> weather.tle
     echo "...done"
 else
     echo "...no network"

@@ -40,6 +40,10 @@ if [ "$sat" == "METEOR-M22" ]; then
     frequency=${METEORM22}
     sampling=${METEOR_sampling}
 fi
+if [ "$sat" == "METEOR-M23" ]; then
+    frequency=${METEORM23}
+    sampling=${METEOR_sampling}
+fi
 
 # Logging:
 echo `date --date=@${start} +%Y%m%d-%H%M%S` $sat $elevation >> recordings.log

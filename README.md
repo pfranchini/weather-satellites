@@ -62,7 +62,7 @@ APT decoder:
 -----------
 ```
 cd ~/Satellite
-wget https://wxtoimgrestored.xyz/downloads/wxtoimg-linux64-2.10.11-1.tar.gz
+wget https://wxtoimgrestored.xyz/downloads-src/wxtoimg-linux64-2.10.11-1.tar.gz
 ```
 or for Raspberry Pi `wxtoimg-linux-armhf-2.11.2-beta.tar.gz`
 ```
@@ -86,7 +86,7 @@ LRPT decoder:
 ```
 git clone https://github.com/artlav/meteor_decoder ~/Satellite/meteor_decoder
 cd ~/Satellite/meteor_decoder
-./build_medet.sh
+source build_medet.sh
 ```
 
 Rectify:
