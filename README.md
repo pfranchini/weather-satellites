@@ -3,8 +3,10 @@
 Automatic scheduling and processing for polar weather satellites passages (NOAA, METEOR) in bash scripts using third party software.
 
 - Works for APT of NOAA 15, 18, 19
-- Works for LRPT of METEOR M2
+- Works for LRPT of METEORs
+- Added METEOR-M2 2
 - (First working attempts for LRPT METEOR M2-2 (added TLE name/frequency/demod options) - satellite not available)
+
 - List the passages for the current day above a minimum elevation using Predict
 - Submit jobs on the linux 'at' queue for each passage
 - Each NOOA's job records the audio of the passages (rtl_fm), resamples it (sox) and produces, if possible several VISIBLE and IR pictures with a map overlay (wxtoimg, wxmap)
@@ -22,7 +24,7 @@ Automatic scheduling and processing for polar weather satellites passages (NOAA,
 - Included script to produce an animation from Mercator projections
 - Tested on Fedora and on Raspberry Pi
 
-Paolo Franchini 2020 - pfranchini@gmail.com
+Paolo Franchini 2022 - pfranchini@gmail.com
 
 Setup:
 =====
@@ -35,7 +37,7 @@ mkdir ~/Satellite
 ```
 Install the followings as superuser. Use `yum` for Fedora-like and `apt` for Ubuntu-like distos, e.g.:
 ```
-yum install gcc ncurses-devel rtl-sdr sox at bc git
+yum install gcc ncurses-devel rtl-sdr sox at bc git make cmake
 yum install ImageMagick
 yum install fpc
 yum install libjpeg*
