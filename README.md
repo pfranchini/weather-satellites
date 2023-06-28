@@ -4,7 +4,7 @@ Automatic scheduling and processing for polar weather satellites passages (NOAA,
 
 - Works for APT of NOAA 15, 18, 19
 - Works for LRPT of METEORs
-- Added METEOR-M2 2
+- Added METEOR-M2 3
 - (First working attempts for LRPT METEOR M2-2 (added TLE name/frequency/demod options) - satellite not available)
 
 - List the passages for the current day above a minimum elevation using Predict
