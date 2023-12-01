@@ -65,13 +65,16 @@ APT decoder:
 ```
 cd ~/Satellite
 wget https://wxtoimgrestored.xyz/downloads-src/wxtoimg-linux64-2.10.11-1.tar.gz
-```
-or for Raspberry Pi `wxtoimg-linux-armhf-2.11.2-beta.tar.gz`
-```
 mkdir ~/Satellite/wxtoimg
 tar xvf wxtoimg-linux64-2.10.11-1.tar.gz -C ~/Satellite/wxtoimg/
 ln -s ~/Satellite/wxtoimg/usr/local/bin/wxtoimg ~/Satellite/wxtoimg/wxtoimg
 ```
+or for Raspberry Pi
+```
+wget https://wxtoimgrestored.xyz/beta/wxtoimg-armhf-2.11.2-beta.deb
+sudo apt install ./wxtoimg-armhf-2.11.2-beta.deb
+```
+
 Register WXtoImg as in https://wxtoimgrestored.xyz/downloads
 
 LRPT demodulator:
