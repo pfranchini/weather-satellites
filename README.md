@@ -35,7 +35,7 @@ Create a directory for the scripts and for the output images in your home direct
 ```
 mkdir ~/Satellite
 ```
-Install the followings as superuser. Use `yum` for Fedora-like and `apt` for Ubuntu-like distos, e.g.:
+Install the followings as superuser. For Fedora-like
 ```
 yum install gcc ncurses-devel rtl-sdr sox at bc git make cmake
 yum install ImageMagick
@@ -43,6 +43,15 @@ yum install fpc
 yum install libjpeg*
 (yum install gqrx)
 (yum install ffmpeg)
+```
+or for Ubuntu-like distos (e.g. Raspberry Pi OS):
+```
+apt install gcc libncurses5-dev rtl-sdr sox at bc git make cmake
+apt install imagemagick
+apt install fpc
+apt install libjpeg-dev
+(apt install gqrx-sdr)
+(apt install ffmpeg)
 ```
 
 Scripts:
@@ -74,8 +83,18 @@ or for Raspberry Pi
 wget https://wxtoimgrestored.xyz/beta/wxtoimg-armhf-2.11.2-beta.deb
 sudo apt install ./wxtoimg-armhf-2.11.2-beta.deb
 ```
-
 Register WXtoImg as in https://wxtoimgrestored.xyz/downloads
+
+Update TLE/Keplers:
+```
+wget -O ~/Satellite/wxtoimg/usr/local/lib/wx/tle/weather.txt http://celestrak.org/NORAD/elements/weather.txt
+```
+or
+```
+sudo wget -O /usr/local/lib/wx/tle/weather.txt http://celestrak.org/NORAD/elements/weather.txt
+```
+
+
 
 LRPT demodulator:
 ----------------
