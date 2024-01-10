@@ -10,7 +10,7 @@ enhancement() {
     name=$2
     
     echo -e ${option}":"
-    $wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 ${option}" -e ${option} -c -y low -o ${file}_res.wav ${file}-${name}.png &> ${name}.log
+    $wxdir/wxtoimg -m ${file}-map -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 ${option}" -e ${option} -c -y low -o ${file}_res.wav ${file}-${name}.png &> ${name}.log
     touch -r ${file}.wav ${file}-${name}.png
     cat ${name}.log
 
@@ -72,7 +72,7 @@ enhancement_IR() {
     name=$2
 
     echo -e ${option}":"
-$wxdir/wxtoimg -m ${file}-map.png -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 ${name}" -b -e ${option} -c -o ${file}_res.wav ${file}-${name}.png &> ${name}.log
+$wxdir/wxtoimg -m ${file}-map -k "%N" -k "%d/%m/%Y - %H:%M UTC" -k "fontsize=14 %D %E %z" -k "fontsize=14 ${name}" -b -e ${option} -c -o ${file}_res.wav ${file}-${name}.png &> ${name}.log
 
     touch -r ${file}.wav ${file}-${name}.png
     cat ${name}.log
@@ -128,7 +128,7 @@ sox ${file}.wav -r 11025 ${file}_res.wav
 touch -r ${file}.wav ${file}_res.wav
 
 # map to overlay
-$wxdir/wxmap -c g:dark-cyan -c C:light-green -a -T "$satellite" -H $tle -p 0 -l 1 -o $start ${file}-map.png &> wxtoimg.log
+$wxdir/wxmap -c g:dark-cyan -c C:light-green -a -T "$satellite" -H $tle -p 0 -l 1 -o $start ${file}-map &> wxtoimg.log
 cat wxtoimg.log
 direction=`less wxtoimg.log  | grep Direction | awk '{print $2}'`
 
@@ -137,16 +137,19 @@ enhancement_IR histeq IR
 
 # VIS:
 enhancement_HVC HVC HVC
-enhancement MSA MSA
+#enhancement MSA MSA
 enhancement MSA-precip MSA-precip
-enhancement HVCT HVCT
+#enhancement HVCT HVCT
 
 # clean up
-rm -rf ${file}-map.png
+rm -rf ${file}-map
 rm -rf ${file}_res.wav
 rm -rf wxtoimg.log
 
-
+# delete used audio files
+if [ "$purge" = "true" ]; then
+    rm -f ${file}.wav
+fi
 
 #if [[ "$direction" == "southbound" ]]; then
 #   echo "Rotate: "
@@ -154,7 +157,7 @@ rm -rf wxtoimg.log
 #   convert -rotate 180 $file-HVC.png $file-HVC.png
 #fi
 
-#convert -rotate 180 ${file}-map.png ${file}-map.png
+#convert -rotate 180 ${file}-map ${file}-map
 
 #convert -rotate 180 $file.png $file.png
 #eog $file.png
